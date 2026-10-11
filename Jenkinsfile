@@ -43,9 +43,10 @@ pipeline {
         stage('Deploy via Docker Compose') {
             steps {
                 sh """
+                    cp -n /home/ubuntu/student-management/.env .env || true
                     export IMAGE_TAG=${IMAGE_TAG}
-                    docker compose -f docker-compose.prod.yml pull
-                    docker compose -f docker-compose.prod.yml up -d --remove-orphans
+                    docker compose -p student-management -f docker-compose.prod.yml pull
+                    docker compose -p student-management -f docker-compose.prod.yml up -d --remove-orphans
                 """
             }
         }
